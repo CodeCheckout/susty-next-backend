@@ -1,4 +1,4 @@
-import Product from "../models/product";
+import Product from '../models/product'
 
 export const addProduct = async (req, res) => {
     const {
@@ -14,7 +14,7 @@ export const addProduct = async (req, res) => {
         currency,
         swapping,
         images,
-        userId
+        userId,
     } = req.body
 
     const newProduct = new Product({
@@ -31,21 +31,22 @@ export const addProduct = async (req, res) => {
         swapping,
         images,
         favouriteCount: 0,
-        owner: userId
+        owner: userId,
     })
 
-    await Product.create(newProduct).then((product) => {
-        return res.status(200).json({
+    await Product.create(newProduct)
+        .then((product) => {
+            return res.status(200).json({
                 success: true,
-                message: "Product added successfully!",
-                product
-            }
-        )
-    }).catch((error) => {
-        return res.status(500).json({
-            success: false,
-            message: "Failed to add product!",
-            error
+                message: 'Product added successfully!',
+                product,
+            })
         })
-    })
+        .catch((error) => {
+            return res.status(500).json({
+                success: false,
+                message: 'Failed to add product!',
+                error,
+            })
+        })
 }

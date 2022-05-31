@@ -5,12 +5,10 @@ export const authenticateUser = async (req, res) => {
 
     const user = await User.findOne({userId: uid})
     if (user) {
-        return res
-            .status(200)
-            .json({
-                message: 'User Details fetched successfully',
-                user: user
-            })
+        return res.status(200).json({
+            message: 'User Details fetched successfully',
+            user: user,
+        })
     }
 
     const newUser = new User({
