@@ -68,5 +68,25 @@ export const fetchProducts = async (req, res) => {
             error,
         })
     })
+}
 
+export const getSingleProduct = async (req, res) => {
+    const {productId} = req.query
+
+    console.log(productId);
+
+    await Product.findById(productId).then((product) => {
+            return res.status(200).json({
+                success: true,
+                message: 'Product fetched successfully!',
+                product,
+            })
+        }
+    ).catch((error) => {
+        return res.status(500).json({
+            success: false,
+            message: 'Failed to fetch product!',
+            error,
+        })
+    })
 }
