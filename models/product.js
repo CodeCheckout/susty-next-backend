@@ -15,22 +15,75 @@ const productSchema = new Schema(
         mainCategory: {
             type: String,
             required: true,
-            enum: ["Women", "Men", "Kids", "Home", "Entertainment"],
+            enum: ['Women', 'Men', 'Kids', 'Home', 'Entertainment'],
         },
         subCategory1: {
             type: String,
             required: true,
-            enum: ["Clothes", "Shoes", "Bags", "Accessories", "Beauty", "Grooming", "Toys & games", "Baby care", "Strollers", "Chairs", "School supplies", "Textile", "Home accessories", "Video games & consoles", "Games & puzzles", "Music & video", "Books"],
+            enum: [
+                'Clothes',
+                'Shoes',
+                'Bags',
+                'Accessories',
+                'Beauty',
+                'Grooming',
+                'Toys & games',
+                'Baby care',
+                'Strollers',
+                'Chairs',
+                'School supplies',
+                'Textile',
+                'Home accessories',
+                'Video games & consoles',
+                'Games & puzzles',
+                'Music & video',
+                'Books',
+            ],
         },
         subCategory2: {
             type: String,
             required: true,
-            enum: ["Coats & jackets", "Jumpers & sweaters", "Suits & blazers", "Dresses", "Skirts", "Jeans", "Pants & leggings", "Shorts & cropped pants", "Swimwear", "Boots", "Heels", "Flats", "Ankle boots", "Flip-flops", "Handbags", "Backpacks", "Tote bags", "Clutches", "Purses & wallets", "Makeup bags", "Jewelry", "Watches", "Belts", "Sunglasses", "Gloves", "Hats & caps", "Makeup", "Perfume", "Face care", "Pants", "Shorts", "T-shits", "Sneakers", "Sport shoes"]
+            enum: [
+                'Coats & jackets',
+                'Jumpers & sweaters',
+                'Suits & blazers',
+                'Dresses',
+                'Skirts',
+                'Jeans',
+                'Pants & leggings',
+                'Shorts & cropped pants',
+                'Swimwear',
+                'Boots',
+                'Heels',
+                'Flats',
+                'Ankle boots',
+                'Flip-flops',
+                'Handbags',
+                'Backpacks',
+                'Tote bags',
+                'Clutches',
+                'Purses & wallets',
+                'Makeup bags',
+                'Jewelry',
+                'Watches',
+                'Belts',
+                'Sunglasses',
+                'Gloves',
+                'Hats & caps',
+                'Makeup',
+                'Perfume',
+                'Face care',
+                'Pants',
+                'Shorts',
+                'T-shits',
+                'Sneakers',
+                'Sport shoes',
+            ],
         },
         brand: {
             type: String,
             required: true,
-            default: "unbranded",
+            default: 'unbranded',
         },
         size: {
             type: String,
@@ -39,7 +92,7 @@ const productSchema = new Schema(
         condition: {
             type: String,
             required: true,
-            enum: ["New with tags", "Very good", "Good", "Satisfactory"],
+            enum: ['New with tags', 'Very good', 'Good', 'Satisfactory'],
         },
         price: {
             type: Number,
@@ -55,16 +108,18 @@ const productSchema = new Schema(
             default: false,
         },
         images: {
-            type: [{
-                name: {
-                    type: String,
-                    required: true,
+            type: [
+                {
+                    name: {
+                        type: String,
+                        required: true,
+                    },
+                    url: {
+                        type: String,
+                        required: true,
+                    },
                 },
-                url: {
-                    type: String,
-                    required: true,
-                }
-            }],
+            ],
             required: true,
         },
         favouriteCount: {
@@ -73,7 +128,7 @@ const productSchema = new Schema(
         owner: {
             type: Schema.Types.ObjectId,
             required: true,
-        }
+        },
     },
     {
         timestamps: true,

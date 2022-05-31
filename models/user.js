@@ -24,12 +24,12 @@ const userSchema = new Schema(
         },
         userId: {
             type: String,
-            required: true
+            required: true,
         },
         email: {
             type: String,
-            required: true
-        }
+            required: true,
+        },
     },
     {
         timestamps: true,
