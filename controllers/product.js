@@ -75,8 +75,6 @@ export const fetchProducts = async (req, res) => {
 export const getSingleProduct = async (req, res) => {
     const {productId} = req.query
 
-    console.log(productId)
-
     await Product.findById(productId)
         .then((product) => {
             return res.status(200).json({
