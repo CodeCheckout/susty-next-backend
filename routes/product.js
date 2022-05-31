@@ -1,5 +1,9 @@
 import express from 'express'
-import {addProduct,fetchProducts,getSingleProduct} from '../controllers/product'
+import {
+    addProduct,
+    fetchProducts,
+    getSingleProduct,
+} from '../controllers/product'
 
 const router = express.Router()
 

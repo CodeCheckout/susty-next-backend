@@ -51,42 +51,45 @@ export const addProduct = async (req, res) => {
         })
 }
 
-
 export const fetchProducts = async (req, res) => {
     const {productLimit} = req.query
 
-    await Product.find({}).limit(productLimit).then((products) => {
-        return res.status(200).json({
-            success: true,
-            message: 'Products fetched successfully!',
-            products,
+    await Product.find({})
+        .limit(productLimit)
+        .then((products) => {
+            return res.status(200).json({
+                success: true,
+                message: 'Products fetched successfully!',
+                products,
+            })
         })
-    }).catch((error) => {
-        return res.status(500).json({
-            success: false,
-            message: 'Failed to fetch products!',
-            error,
+        .catch((error) => {
+            return res.status(500).json({
+                success: false,
+                message: 'Failed to fetch products!',
+                error,
+            })
         })
-    })
 }
 
 export const getSingleProduct = async (req, res) => {
     const {productId} = req.query
 
-    console.log(productId);
+    console.log(productId)
 
-    await Product.findById(productId).then((product) => {
+    await Product.findById(productId)
+        .then((product) => {
             return res.status(200).json({
                 success: true,
                 message: 'Product fetched successfully!',
                 product,
             })
-        }
-    ).catch((error) => {
-        return res.status(500).json({
-            success: false,
-            message: 'Failed to fetch product!',
-            error,
         })
-    })
+        .catch((error) => {
+            return res.status(500).json({
+                success: false,
+                message: 'Failed to fetch product!',
+                error,
+            })
+        })
 }
