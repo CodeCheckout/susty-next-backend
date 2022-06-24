@@ -1,8 +1,9 @@
-import { Express } from "express";
 import Seller from '../models/seller'
 
-export const getSellerProducts = () => {
-    const sellerId = req.query;
+export const getSellerProducts = async(req, res) => {
+    const {sellerId} = req.query;
+
+    console.log(req.query)
 
     await Seller.findById(sellerId)
         .then((products) => {

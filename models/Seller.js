@@ -40,6 +40,9 @@ const sellerSchema = new Schema(
             ],
             required: true
         }
+    },
+    {
+        timestamps: true
     }
     
 )
