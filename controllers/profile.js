@@ -1,9 +1,9 @@
 import User from '../models/user'
 
 export const getProfileDetails = async (req, res) => {
-    const {userId} = req.query
+    const {id} = req.query
 
-    await User.findById(userId)
+    await User.findById(id)
         .then((user) => {
             return res.status(200).json({
                 success:true,
@@ -12,7 +12,7 @@ export const getProfileDetails = async (req, res) => {
             })
         })
         .catch((error) => {
-            return res.status(500).json({
+            return res.status(400).json({
                 success:false,
                 message: 'Failed to fetch profile details!'
             })
