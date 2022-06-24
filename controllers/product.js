@@ -91,3 +91,27 @@ export const getSingleProduct = async (req, res) => {
             })
         })
 }
+
+export const filterProducts = async(req, res) => {
+    const {mainCat, subCatOne, subCatTwo, condition} = req.body;
+
+    let items = await Product.find({mainCategory:mainCat})
+
+    if(items){
+        let filteredResult = items.filter((item) => {
+            return item.subCategory1 == subCatOne;
+        })
+
+        filteredResult = filteredResult.filter((item) => {
+            return item.subCategory2 == subCatTwo;
+        })
+
+        filteredResult = filteredResult.filter((item) => {
+            return item.condition == condition;
+        })
+
+        return res.status(200).json({
+            result : filteredResult
+        })
+    }
+}
