@@ -92,77 +92,84 @@ export const getSingleProduct = async (req, res) => {
         })
 }
 
-export const filterProducts = async(req, res) => {
-    const {mainCat, subCatOne, subCatTwo, condition, color, brand, size, price, swapping} = req.body;
-    const priceFrom = price[0];
-    const priceTo = price[1];
+export const filterProducts = async (req, res) => {
+    const {
+        mainCat,
+        subCatOne,
+        subCatTwo,
+        condition,
+        color,
+        brand,
+        size,
+        price,
+        swapping,
+    } = req.body
+    const priceFrom = price[0]
+    const priceTo = price[1]
 
-    let items = await Product.find({mainCategory:mainCat})
-    let filteredResult = items;
-    if(items){
-        if(subCatOne){
+    let items = await Product.find({mainCategory: mainCat})
+    let filteredResult = items
+    if (items) {
+        if (subCatOne) {
             filteredResult = filteredResult.filter((item) => {
-                return item.subCategory1 == subCatOne;
+                return item.subCategory1 == subCatOne
             })
         }
 
-        if(subCatTwo){
+        if (subCatTwo) {
             filteredResult = filteredResult.filter((item) => {
-                return item.subCategory2 == subCatTwo;
+                return item.subCategory2 == subCatTwo
             })
         }
 
-        if(condition){
+        if (condition) {
             filteredResult = filteredResult.filter((item) => {
-                return item.condition == condition;
+                return item.condition == condition
             })
         }
 
-        if(size){
+        if (size) {
             filteredResult = filteredResult.filter((item) => {
-                return item.size == size;
+                return item.size == size
             })
         }
 
-        if(color){
+        if (color) {
             filteredResult = filteredResult.filter((item) => {
-                return item.color == color;
+                return item.color == color
             })
         }
 
-        if(brand){
+        if (brand) {
             filteredResult = filteredResult.filter((item) => {
-                return item.brand == brand;
+                return item.brand == brand
             })
         }
 
-        if(price){
-            if(priceFrom && priceTo){
+        if (price) {
+            if (priceFrom && priceTo) {
                 filteredResult = filteredResult.filter((item) => {
-                    return item.price >= priceFrom && item.price <= priceTo;
+                    return item.price >= priceFrom && item.price <= priceTo
+                })
+            } else if (priceFrom) {
+                filteredResult = filteredResult.filter((item) => {
+                    return item.price >= priceFrom
+                })
+            } else if (priceTo) {
+                filteredResult = filteredResult.filter((item) => {
+                    return item.price <= priceTo
                 })
             }
-
-            else if(priceFrom){
-                filteredResult = filteredResult.filter((item) => {
-                    return item.price >= priceFrom;
-                })
-            }
-            else if(priceTo){
-                filteredResult = filteredResult.filter((item) => {
-                    return item.price <= priceTo;
-                })
-            }
         }
 
-        if(swapping){
+        if (swapping) {
             filteredResult = filteredResult.filter((item) => {
-                return item.swapping == swapping;
+                return item.swapping == swapping
             })
         }
 
         return res.status(200).json({
-            result : filteredResult
+            result: filteredResult,
         })
     }
 }
