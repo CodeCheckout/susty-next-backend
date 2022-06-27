@@ -1,7 +1,7 @@
 import Seller from '../models/seller'
 
-export const getSellerProducts = async(req, res) => {
-    const {sellerId} = req.query;
+export const getSellerProducts = async (req, res) => {
+    const {sellerId} = req.query
 
     console.log(req.query)
 
@@ -20,5 +20,4 @@ export const getSellerProducts = async(req, res) => {
                 error,
             })
         })
-
 }
