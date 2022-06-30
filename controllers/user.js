@@ -1,14 +1,17 @@
 import User from '../models/user'
 
-export const updateusername = async (req, res) => {
+//update user name
+export const updateUserName = async (req, res) => {
  
 }
 
-export const updateuserrole = async (req, res) => {
+//update user roles
+export const updateUserRole = async (req, res) => {
  
 }
 
-export const updateuseraddress = async (req, res) => {
+//update user address
+export const updateUserAddress = async (req, res) => {
  
 }
 

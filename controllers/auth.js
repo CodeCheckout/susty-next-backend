@@ -1,7 +1,7 @@
 import User from '../models/user'
 
 export const authenticateUser = async (req, res) => {
-    const {uid, displayName, photoURL, email} = req.body
+    const {uid, displayName, photoURL, email, address} = req.body
 
     const user = await User.findOne({userId: uid})
     if (user) {
@@ -20,6 +20,7 @@ export const authenticateUser = async (req, res) => {
         },
         role: 'customer',
         email: email,
+        address: address,
     })
 
     await User.create(newUser)
