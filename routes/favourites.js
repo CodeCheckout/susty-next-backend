@@ -4,6 +4,6 @@ import {getFavouritesProducts, addFavouritesProducts} from '../controllers/favou
 const router = express.Router();
 
 router.post('/favourites/add-favourites', addFavouritesProducts)
-router.get('/favourites/fetch-favourites-products-list', getFavouritesProducts)
+router.get('/favourites/fetch-favourites-product-list', getFavouritesProducts)
 
 module.exports = router
