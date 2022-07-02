@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 
 const {Schema} = mongoose
 
@@ -12,7 +12,7 @@ const favouritesSchema = new Schema(
             type: [String],
             required: true,
             default: [],
-        }
+        },
     },
     {
         timestamps: true,

@@ -1,7 +1,10 @@
-import express from "express";
-import {getFavouritesProducts, addFavouritesProducts} from '../controllers/favourites'
+import express from 'express'
+import {
+    getFavouritesProducts,
+    addFavouritesProducts,
+} from '../controllers/favourites'
 
-const router = express.Router();
+const router = express.Router()
 
 router.post('/favourites/add-favourites', addFavouritesProducts)
 router.get('/favourites/fetch-favourites-product-list', getFavouritesProducts)
