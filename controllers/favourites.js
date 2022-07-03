@@ -73,7 +73,7 @@ export const addFavouritesProducts = async (req, res) => {
                                             {
                                                 $push: {
                                                     favouriteProductList:
-                                                        productId,
+                                                    productId,
                                                 },
                                             }
                                         )
@@ -112,6 +112,25 @@ export const getFavouritesProducts = async (req, res) => {
             })
         })
         .catch((error) => {
+            return res.status(400).json({
+                success: false,
+                message: 'Failed to fetch favourites',
+                error,
+            })
+        })
+}
+
+export const removeFavourites = async (req, res) => {
+    const {userId, productId} = req.body
+
+    await Favourites.findOne({userId: userId})
+        .then((newFavouriteList) => {
+            return res.status(200).json({
+                success: true,
+                message: 'Favourite removed successfully',
+                newFavouriteList
+            })
+        }).catch((error) => {
             return res.status(400).json({
                 success: false,
                 message: 'Failed to fetch favourites',
