@@ -73,7 +73,7 @@ export const addFavouritesProducts = async (req, res) => {
                                             {
                                                 $push: {
                                                     favouriteProductList:
-                                                    productId,
+                                                        productId,
                                                 },
                                             }
                                         )
@@ -105,12 +105,12 @@ export const getFavouritesProducts = async (req, res) => {
 
     await Favourites.findOne({userId: userId})
         .then((favourites) => {
-            if(favourites.favouriteProductList.length === 0){
+            if (favourites.favouriteProductList.length === 0) {
                 return res.status(400).json({
                     success: false,
                     message: 'Favourites list is empty',
                 })
-            }else{
+            } else {
                 return res.status(200).json({
                     success: true,
                     message: 'Favourites fetched successfully',
@@ -138,28 +138,37 @@ export const removeFavourites = async (req, res) => {
                     message: 'No favourites yet',
                 })
             } else {
-                return favourites;
+                return favourites
             }
-        }).then(async (favourite) => {
+        })
+        .then(async (favourite) => {
             if (favourite.favouriteProductList.includes(productId)) {
-                const newFavourites = favourite.favouriteProductList.filter((id) => {
-                    return id !== productId;
-                })
-                await Favourites.findOneAndUpdate({userId: userId}, {
-                    favouriteProductList: newFavourites
-                }, {new: true}).then(() => {
-                    return res.status(200).json({
-                        success: true,
-                        message: 'Removed favourite successfully',
-                        newFavourites,
+                const newFavourites = favourite.favouriteProductList.filter(
+                    (id) => {
+                        return id !== productId
+                    }
+                )
+                await Favourites.findOneAndUpdate(
+                    {userId: userId},
+                    {
+                        favouriteProductList: newFavourites,
+                    },
+                    {new: true}
+                )
+                    .then(() => {
+                        return res.status(200).json({
+                            success: true,
+                            message: 'Removed favourite successfully',
+                            newFavourites,
+                        })
                     })
-                }).catch((error)=>{
-                    return res.status(400).json({
-                        success: false,
-                        message: 'New favourite Update failed',
-                        error
+                    .catch((error) => {
+                        return res.status(400).json({
+                            success: false,
+                            message: 'New favourite Update failed',
+                            error,
+                        })
                     })
-                })
             } else {
                 return res.status(400).json({
                     success: false,
