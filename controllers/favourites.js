@@ -105,11 +105,76 @@ export const getFavouritesProducts = async (req, res) => {
 
     await Favourites.findOne({userId: userId})
         .then((favourites) => {
-            return res.status(200).json({
-                success: true,
-                message: 'Favourites fetched successfully',
-                favourites: favourites.favouriteProductList,
+            if (favourites.favouriteProductList.length === 0) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Favourites list is empty',
+                })
+            } else {
+                return res.status(200).json({
+                    success: true,
+                    message: 'Favourites fetched successfully',
+                    favourites: favourites.favouriteProductList,
+                })
+            }
+        })
+        .catch((error) => {
+            return res.status(500).json({
+                success: false,
+                message: 'Failed to fetch favourites',
+                error,
             })
+        })
+}
+
+export const removeFavourites = async (req, res) => {
+    const {userId, productId} = req.body
+
+    await Favourites.findOne({userId: userId})
+        .then(async (favourites) => {
+            if (favourites.favouriteProductList.length === 0) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'No favourites yet',
+                })
+            } else {
+                return favourites
+            }
+        })
+        .then(async (favourite) => {
+            if (favourite.favouriteProductList.includes(productId)) {
+                const newFavourites = favourite.favouriteProductList.filter(
+                    (id) => {
+                        return id !== productId
+                    }
+                )
+                await Favourites.findOneAndUpdate(
+                    {userId: userId},
+                    {
+                        favouriteProductList: newFavourites,
+                    },
+                    {new: true}
+                )
+                    .then(() => {
+                        return res.status(200).json({
+                            success: true,
+                            message: 'Removed favourite successfully',
+                            newFavourites,
+                        })
+                    })
+                    .catch((error) => {
+                        return res.status(400).json({
+                            success: false,
+                            message: 'New favourite Update failed',
+                            error,
+                        })
+                    })
+            } else {
+                return res.status(400).json({
+                    success: false,
+                    message: 'There is no such favourite you liked',
+                })
+            }
         })
         .catch((error) => {
             return res.status(400).json({
