@@ -104,7 +104,7 @@ const productSchema = new Schema(
         },
         color: {
             type: String,
-            default: 'white'
+            default: 'white',
         },
         swapping: {
             type: Boolean,
