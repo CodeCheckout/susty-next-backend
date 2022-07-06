@@ -1,7 +1,9 @@
 import express from 'express'
-import {updateUserName, updateUserRole, updateUserAddress, getUserAddress} from '../controllers/user'
+import {adduser, updateUserName, updateUserRole, updateUserAddress, getUserAddress} from '../controllers/user'
 
 const router = express.Router()
+
+router.post('/user/adduser', adduser)
 
 router.put('/user/updateusername', updateUserName)
 router.put('/user/updateuserrole', updateUserRole)
