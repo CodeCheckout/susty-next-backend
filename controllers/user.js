@@ -1,4 +1,4 @@
-import User from "../models/user";
+import User from '../models/user'
 
 //add user
 export const adduser = async (req, res) => {
@@ -32,28 +32,28 @@ export const adduser = async (req, res) => {
 
 //update user name
 export const updateUserName = async (req, res) => {
-  const { address } = req.body;
+    const {address} = req.body
 
-  const newAddress = new User({
-    address,
-  });
-
-  await User.updateOne(newAddress)
-    .then((address) => {
-      return res.status(200).json({
-        success: true,
-        message: "Username updated successfully!",
+    const newAddress = new User({
         address,
-      });
     })
-    .catch((error) => {
-      return res.status(500).json({
-        success: false,
-        message: "Failed to update Username!",
-        error,
-      });
-    });
-};
+
+    await User.updateOne(newAddress)
+        .then((address) => {
+            return res.status(200).json({
+                success: true,
+                message: 'Username updated successfully!',
+                address,
+            })
+        })
+        .catch((error) => {
+            return res.status(500).json({
+                success: false,
+                message: 'Failed to update Username!',
+                error,
+            })
+        })
+}
 
 //update user roles
 export const updateUserRole = async (req, res) => {
