@@ -92,8 +92,20 @@ export const getSingleProduct = async (req, res) => {
         })
 }
 
-export const filterProducts = async(req, res) => {
-    const {mainCat, subCatOne, subCatTwo, condition, color, brand, size, priceFrom, priceTo, swapping, sortBy} = req.query;
+export const filterProducts = async (req, res) => {
+    const {
+        mainCat,
+        subCatOne,
+        subCatTwo,
+        condition,
+        color,
+        brand,
+        size,
+        priceFrom,
+        priceTo,
+        swapping,
+        sortBy,
+    } = req.query
 
     let items = await Product.find({mainCategory: mainCat})
     let filteredResult = items
@@ -133,9 +145,9 @@ export const filterProducts = async(req, res) => {
                 return item.brand == brand
             })
         }
-        
-        if(priceFrom || priceTo){
-            if(priceFrom && priceTo){
+
+        if (priceFrom || priceTo) {
+            if (priceFrom && priceTo) {
                 filteredResult = filteredResult.filter((item) => {
                     return item.price >= priceFrom && item.price <= priceTo
                 })
@@ -150,16 +162,15 @@ export const filterProducts = async(req, res) => {
             }
         }
 
-        if(swapping == 'true' || swapping == 'false'){
-            if (swapping === "true"){
+        if (swapping == 'true' || swapping == 'false') {
+            if (swapping === 'true') {
                 filteredResult = filteredResult.filter((item) => {
                     return item.swapping === true
                 })
             }
-            if (swapping === "false"){
+            if (swapping === 'false') {
                 filteredResult = filteredResult.filter((item) => {
                     return item.swapping === false
-
                 })
             }
         }
