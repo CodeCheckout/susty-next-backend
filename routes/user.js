@@ -1,5 +1,11 @@
 import express from 'express'
-import {adduser, updateUserName, updateUserRole, updateUserAddress, getUserAddress} from '../controllers/user'
+import {
+    adduser,
+    updateUserName,
+    updateUserRole,
+    updateUserAddress,
+    getUserAddress,
+} from '../controllers/user'
 
 const router = express.Router()
 
