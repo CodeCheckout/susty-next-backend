@@ -13,10 +13,30 @@ const sellerSchema = new Schema(
         address: {
             type: String,
             validate: [
-                { validator: function (value) {return !value.includes('$') }, message: 'Incorrect character!', },
-                { validator: function (value) {return !value.includes('<') }, message: 'Incorrect character!',},
-                { validator: function (value) {return !value.includes('>') }, message: 'Incorrect character!',},
-                { validator: function (value) {return !value.includes('?') },message: 'Incorrect character!', },
+                {
+                    validator: function (value) {
+                        return !value.includes('$')
+                    },
+                    message: 'Incorrect character!',
+                },
+                {
+                    validator: function (value) {
+                        return !value.includes('<')
+                    },
+                    message: 'Incorrect character!',
+                },
+                {
+                    validator: function (value) {
+                        return !value.includes('>')
+                    },
+                    message: 'Incorrect character!',
+                },
+                {
+                    validator: function (value) {
+                        return !value.includes('?')
+                    },
+                    message: 'Incorrect character!',
+                },
             ],
             required: true,
         },
