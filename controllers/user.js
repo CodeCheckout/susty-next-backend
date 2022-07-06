@@ -2,33 +2,33 @@ import User from "../models/user";
 
 //add user
 export const adduser = async (req, res) => {
-  const { name, image, role, userId, email, address } = req.body;
+    const {name, image, role, userId, email, address} = req.body
 
-  const newUser = new User({
-    name,
-    image,
-    role,
-    userId,
-    email,
-    address,
-  });
-
-  await User.create(newUser)
-    .then((user) => {
-      return res.status(200).json({
-        success: true,
-        message: "User added successfully!",
-        user,
-      });
+    const newUser = new User({
+        name,
+        image,
+        role,
+        userId,
+        email,
+        address,
     })
-    .catch((error) => {
-      return res.status(500).json({
-        success: false,
-        message: "Failed to add User!",
-        error,
-      });
-    });
-};
+
+    await User.create(newUser)
+        .then((user) => {
+            return res.status(200).json({
+                success: true,
+                message: 'User added successfully!',
+                user,
+            })
+        })
+        .catch((error) => {
+            return res.status(500).json({
+                success: false,
+                message: 'Failed to add User!',
+                error,
+            })
+        })
+}
 
 //update user
 export const updateUser = async (req, res) => {
@@ -59,7 +59,7 @@ export const updateUser = async (req, res) => {
 
 //get user address
 export const getUserAddress = async (req, res) => {
-  const { id } = req.query;
+    const {id} = req.query
 
   await User.findOne({ _id: id })
     .then((user) => {

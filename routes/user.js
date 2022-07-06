@@ -1,18 +1,18 @@
-import express from "express";
+import express from 'express'
 import {
   adduser,
   updateUser,
   getUserAddress,
 } from "../controllers/user";
 
-const router = express.Router();
+const router = express.Router()
 
-router.post("/user/adduser", adduser);
+router.post('/user/adduser', adduser)
 
 
 router.put("/user/updateuser", updateUser);
 
 
-router.get("/user/getaddress", getUserAddress);
+router.get('/user/getaddress', getUserAddress)
 
-module.exports = router;
+module.exports = router
