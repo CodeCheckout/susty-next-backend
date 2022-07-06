@@ -2,44 +2,33 @@ import User from "../models/user";
 
 //add user
 export const adduser = async (req, res) => {
-  const {
+  const { name, image, role, userId, email, address } = req.body;
+
+  const newUser = new User({
     name,
     image,
     role,
     userId,
     email,
-    address
+    address,
+  });
 
-} = req.body
-
-const newUser = new User({
-  name,
-  image,
-  role,
-  userId,
-  email,
-  address
-})
-
-await User.create(newUser)
+  await User.create(newUser)
     .then((user) => {
-        return res.status(200).json({
-            success: true,
-            message: 'User added successfully!',
-            user,
-        })
+      return res.status(200).json({
+        success: true,
+        message: "User added successfully!",
+        user,
+      });
     })
     .catch((error) => {
-        return res.status(500).json({
-            success: false,
-            message: 'Failed to add User!',
-            error,
-        })
-    })
-}
-
-//add address
-
+      return res.status(500).json({
+        success: false,
+        message: "Failed to add User!",
+        error,
+      });
+    });
+};
 
 //update user name
 export const updateUserName = async (req, res) => {
@@ -68,19 +57,18 @@ export const updateUserName = async (req, res) => {
 
 //update user roles
 export const updateUserRole = async (req, res) => {
-  
-const {id} = req.params.id;
-const upadate = req.body;
-const options = {new: true};
+  const { id } = req.params.id;
+  const upadate = req.body;
+  const options = { new: true };
 
-await User.findByIdAndUpdate(id, upadate, options )
-  .then((address)=>{
-    return res.status(200).json({
-      success: true,
-      message: "Userrole updated successfully!",
-      address,
-    });
-  })
+  await User.findByIdAndUpdate(id, upadate, options)
+    .then((address) => {
+      return res.status(200).json({
+        success: true,
+        message: "Userrole updated successfully!",
+        address,
+      });
+    })
     .catch((error) => {
       return res.status(500).json({
         success: false,
@@ -91,10 +79,7 @@ await User.findByIdAndUpdate(id, upadate, options )
 };
 
 //update user address
-export const updateUserAddress = async (req, res) => {
-
-};
-
+export const updateUserAddress = async (req, res) => {};
 
 //get user address
 export const getUserAddress = async (req, res) => {
@@ -102,11 +87,10 @@ export const getUserAddress = async (req, res) => {
 
   await User.findById(id)
     .then((user) => {
-      console.log(user.email)
+      console.log(user.email);
       return res.status(200).json({
         success: true,
         message: "Address fetched successfully!",
-        
       });
     })
     .catch((error) => {
@@ -116,5 +100,3 @@ export const getUserAddress = async (req, res) => {
       });
     });
 };
-
-
