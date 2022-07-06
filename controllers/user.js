@@ -1,4 +1,4 @@
-import User from "../models/user";
+import User from '../models/user'
 
 //add user
 export const adduser = async (req, res) => {
@@ -32,49 +32,49 @@ export const adduser = async (req, res) => {
 
 //update user
 export const updateUser = async (req, res) => {
-  const { userId, name, image, email, address } = req.body;
-  const upadatedUser = {
-    name: name,
-    image: image,
-    email: email,
-    address: address,
-  };
+    const {userId, name, image, email, address} = req.body
+    const upadatedUser = {
+        name: name,
+        image: image,
+        email: email,
+        address: address,
+    }
 
-  await User.findOneAndUpdate({ _id: userId }, upadatedUser, { new: true })
-    .then((user) => {
-      return res.status(200).json({
-        success: true,
-        message: "User updated successfully!",
-        user,
-      });
-    })
-    .catch((error) => {
-      return res.status(500).json({
-        success: false,
-        message: "Failed to update User!",
-        error,
-      });
-    });
-};
+    await User.findOneAndUpdate({_id: userId}, upadatedUser, {new: true})
+        .then((user) => {
+            return res.status(200).json({
+                success: true,
+                message: 'User updated successfully!',
+                user,
+            })
+        })
+        .catch((error) => {
+            return res.status(500).json({
+                success: false,
+                message: 'Failed to update User!',
+                error,
+            })
+        })
+}
 
 //get user address
 export const getUserAddress = async (req, res) => {
     const {id} = req.query
 
-  await User.findOne({ _id: id })
-    .then((user) => {
-      console.log(user.address);
-      return res.status(200).json({
-        success: true,
-        message: "Address fetched successfully!",
-        address: user.address,
-      });
-    })
-    .catch((error) => {
-      return res.status(400).json({
-        success: false,
-        message: "Failed to fetch Address!",
-        error,
-      });
-    });
-};
+    await User.findOne({_id: id})
+        .then((user) => {
+            console.log(user.address)
+            return res.status(200).json({
+                success: true,
+                message: 'Address fetched successfully!',
+                address: user.address,
+            })
+        })
+        .catch((error) => {
+            return res.status(400).json({
+                success: false,
+                message: 'Failed to fetch Address!',
+                error,
+            })
+        })
+}
