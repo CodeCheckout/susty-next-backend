@@ -1,4 +1,4 @@
-import User from '../models/user'
+import User from "../models/user";
 
 //add user
 export const adduser = async (req, res) => {
@@ -30,73 +30,51 @@ export const adduser = async (req, res) => {
     });
 };
 
-//update user name
-export const updateUserName = async (req, res) => {
-    const {address} = req.body
+//update user
+export const updateUser = async (req, res) => {
+  const { userId, name, image, email, address } = req.body;
+  const upadatedUser = {
+    name: name,
+    image: image,
+    email: email,
+    address: address,
+  };
 
-    const newAddress = new User({
-        address,
-    })
-
-    await User.updateOne(newAddress)
-        .then((address) => {
-            return res.status(200).json({
-                success: true,
-                message: 'Username updated successfully!',
-                address,
-            })
-        })
-        .catch((error) => {
-            return res.status(500).json({
-                success: false,
-                message: 'Failed to update Username!',
-                error,
-            })
-        })
-}
-
-//update user roles
-export const updateUserRole = async (req, res) => {
-  const { id } = req.params.id;
-  const upadate = req.body;
-  const options = { new: true };
-
-  await User.findByIdAndUpdate(id, upadate, options)
-    .then((address) => {
+  await User.findOneAndUpdate({ _id: userId }, upadatedUser, { new: true })
+    .then((user) => {
       return res.status(200).json({
         success: true,
-        message: "Userrole updated successfully!",
-        address,
+        message: "User updated successfully!",
+        user,
       });
     })
     .catch((error) => {
       return res.status(500).json({
         success: false,
-        message: "Failed to update UserRole!",
+        message: "Failed to update User!",
         error,
       });
     });
 };
 
-//update user address
-export const updateUserAddress = async (req, res) => {};
-
 //get user address
 export const getUserAddress = async (req, res) => {
   const { id } = req.query;
 
-  await User.findById(id)
+  await User.findOne({ _id: id })
     .then((user) => {
-      console.log(user.email);
+      console.log(user.address);
       return res.status(200).json({
         success: true,
         message: "Address fetched successfully!",
+        address: user.address,
       });
     })
     .catch((error) => {
       return res.status(400).json({
         success: false,
         message: "Failed to fetch Address!",
+        error,
       });
     });
 };
