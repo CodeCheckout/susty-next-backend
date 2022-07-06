@@ -91,3 +91,94 @@ export const getSingleProduct = async (req, res) => {
             })
         })
 }
+
+export const filterProducts = async (req, res) => {
+    const {
+        mainCat,
+        subCatOne,
+        subCatTwo,
+        condition,
+        color,
+        brand,
+        size,
+        priceFrom,
+        priceTo,
+        swapping,
+        sortBy,
+    } = req.query
+
+    let items = await Product.find({mainCategory: mainCat})
+    let filteredResult = items
+    if (items) {
+        if (subCatOne) {
+            filteredResult = filteredResult.filter((item) => {
+                return item.subCategory1 == subCatOne
+            })
+        }
+
+        if (subCatTwo) {
+            filteredResult = filteredResult.filter((item) => {
+                return item.subCategory2 == subCatTwo
+            })
+        }
+
+        if (condition) {
+            filteredResult = filteredResult.filter((item) => {
+                return item.condition == condition
+            })
+        }
+
+        if (size) {
+            filteredResult = filteredResult.filter((item) => {
+                return item.size == size
+            })
+        }
+
+        if (color) {
+            filteredResult = filteredResult.filter((item) => {
+                return item.color == color
+            })
+        }
+
+        if (brand) {
+            filteredResult = filteredResult.filter((item) => {
+                return item.brand == brand
+            })
+        }
+
+        if (priceFrom || priceTo) {
+            if (priceFrom && priceTo) {
+                filteredResult = filteredResult.filter((item) => {
+                    return item.price >= priceFrom && item.price <= priceTo
+                })
+            } else if (priceFrom) {
+                filteredResult = filteredResult.filter((item) => {
+                    return item.price >= priceFrom
+                })
+            } else if (priceTo) {
+                filteredResult = filteredResult.filter((item) => {
+                    return item.price <= priceTo
+                })
+            }
+        }
+
+        if (swapping == 'true' || swapping == 'false') {
+            if (swapping === 'true') {
+                filteredResult = filteredResult.filter((item) => {
+                    return item.swapping === true
+                })
+            }
+            if (swapping === 'false') {
+                filteredResult = filteredResult.filter((item) => {
+                    return item.swapping === false
+                })
+            }
+        }
+
+        // implement sortBy
+
+        return res.status(200).json({
+            result: filteredResult,
+        })
+    }
+}
