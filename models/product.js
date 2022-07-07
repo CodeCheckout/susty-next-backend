@@ -102,6 +102,10 @@ const productSchema = new Schema(
             type: String,
             required: true,
         },
+        color: {
+            type: String,
+            default: 'white',
+        },
         swapping: {
             type: Boolean,
             required: true,
