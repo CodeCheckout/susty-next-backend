@@ -12,22 +12,27 @@ export const adduser = async (req, res) => {
     email,
     address,
   });
-
-  await User.create(newUser)
-    .then((user) => {
-      return res.status(200).json({
-        success: true,
-        message: "User added successfully!",
-        user,
+  if (userId != null) {
+    return res.status(400).json({
+        message: "The user already exists!",
       });
-    })
-    .catch((error) => {
-      return res.status(500).json({
-        success: false,
-        message: "Failed to add User!",
-        error,
+  } else {
+    await User.create(newUser)
+      .then((user) => {
+        return res.status(200).json({
+          success: true,
+          message: "User added successfully!",
+          user,
+        });
+      })
+      .catch((error) => {
+        return res.status(500).json({
+          success: false,
+          message: "Failed to add User!",
+          error,
+        });
       });
-    });
+  }
 };
 
 //update user
@@ -39,7 +44,7 @@ export const updateUser = async (req, res) => {
     email: email,
     address: address,
   };
-  if (_id === userId) {
+  if (_id === null) {
     return res.status(400).json({
       message: "There is no such user",
     });
