@@ -14,8 +14,8 @@ export const adduser = async (req, res) => {
   });
   if (userId != null) {
     return res.status(400).json({
-        message: "The user already exists!",
-      });
+      message: "The user already exists!",
+    });
   } else {
     await User.create(newUser)
       .then((user) => {
@@ -44,7 +44,7 @@ export const updateUser = async (req, res) => {
     email: email,
     address: address,
   };
-  if (_id === null) {
+  if (userId === null) {
     return res.status(400).json({
       message: "There is no such user",
     });
@@ -72,25 +72,31 @@ export const getUserAddress = async (req, res) => {
   const { id } = req.query;
 
   await User.findOne({ _id: id })
-    .then((user) => {
-      if (id === null) {
+    .then(async (userExist) => {
+      if (userExist === null) {
         return res.status(400).json({
           message: "There is no such user",
         });
-      } else {
-        console.log(user.address);
-        return res.status(200).json({
-          success: true,
-          message: "Address fetched successfully!",
-          address: user.address,
-        });
       }
     })
-    .catch((error) => {
-      return res.status(400).json({
-        success: false,
-        message: "Failed to fetch Address!",
-        error,
-      });
+
+    .then(async () => {
+      await User.findOne({ _id: id })
+        .then((user) => {
+          console.log(user.address);
+          return res.status(200).json({
+            success: true,
+            message: "Address fetched successfully!",
+            address: user.address,
+          });
+        })
+        .catch((error) => {
+          return res.status(400).json({
+            success: false,
+            message: "Failed to fetch Address!",
+            error,
+          });
+        });
     });
 };
+
