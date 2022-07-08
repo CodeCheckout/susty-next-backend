@@ -13,20 +13,31 @@ export const adduser = async (req, res) => {
         address,
     })
 
-    await User.create(newUser)
-        .then((user) => {
-            return res.status(200).json({
-                success: true,
-                message: 'User added successfully!',
-                user,
-            })
+    await User.findOne({email: email})
+        .then(async (emailExist) => {
+            if (emailExist !== null) {
+                return res.status(400).json({
+                    message: 'Email has taken!',
+                })
+            }
         })
-        .catch((error) => {
-            return res.status(500).json({
-                success: false,
-                message: 'Failed to add User!',
-                error,
-            })
+
+        .then(async () => {
+            await User.create(newUser)
+                .then((user) => {
+                    return res.status(200).json({
+                        success: true,
+                        message: 'User added successfully!',
+                        user,
+                    })
+                })
+                .catch((error) => {
+                    return res.status(500).json({
+                        success: false,
+                        message: 'Failed to add User!',
+                        error,
+                    })
+                })
         })
 }
 
@@ -40,20 +51,33 @@ export const updateUser = async (req, res) => {
         address: address,
     }
 
-    await User.findOneAndUpdate({_id: userId}, upadatedUser, {new: true})
-        .then((user) => {
-            return res.status(200).json({
-                success: true,
-                message: 'User updated successfully!',
-                user,
-            })
+    await User.findOne({_id: id})
+        .then(async (userExist) => {
+            if (userExist === null) {
+                return res.status(400).json({
+                    message: 'There is no such user',
+                })
+            }
         })
-        .catch((error) => {
-            return res.status(500).json({
-                success: false,
-                message: 'Failed to update User!',
-                error,
+
+        .then(async () => {
+            await User.findOneAndUpdate({_id: userId}, upadatedUser, {
+                new: true,
             })
+                .then((user) => {
+                    return res.status(200).json({
+                        success: true,
+                        message: 'User updated successfully!',
+                        user,
+                    })
+                })
+                .catch((error) => {
+                    return res.status(500).json({
+                        success: false,
+                        message: 'Failed to update User!',
+                        error,
+                    })
+                })
         })
 }
 
@@ -62,19 +86,30 @@ export const getUserAddress = async (req, res) => {
     const {id} = req.query
 
     await User.findOne({_id: id})
-        .then((user) => {
-            console.log(user.address)
-            return res.status(200).json({
-                success: true,
-                message: 'Address fetched successfully!',
-                address: user.address,
-            })
+        .then(async (userExist) => {
+            if (userExist === null) {
+                return res.status(400).json({
+                    message: 'There is no such user',
+                })
+            }
         })
-        .catch((error) => {
-            return res.status(400).json({
-                success: false,
-                message: 'Failed to fetch Address!',
-                error,
-            })
+
+        .then(async () => {
+            await User.findOne({_id: id})
+                .then((user) => {
+                    console.log(user.address)
+                    return res.status(200).json({
+                        success: true,
+                        message: 'Address fetched successfully!',
+                        address: user.address,
+                    })
+                })
+                .catch((error) => {
+                    return res.status(400).json({
+                        success: false,
+                        message: 'Failed to fetch Address!',
+                        error,
+                    })
+                })
         })
 }
