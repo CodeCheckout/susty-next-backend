@@ -12,27 +12,33 @@ export const adduser = async (req, res) => {
     email,
     address,
   });
-  if (userId != null) {
-    return res.status(400).json({
-      message: "The user already exists!",
+
+  await User.findOne({ email: email })
+    .then(async (emailExist) => {
+      if (emailExist !== null) {
+        return res.status(400).json({
+          message: "Email has taken!",
+        });
+      }
+    })
+
+    .then(async () => {
+      await User.create(newUser)
+        .then((user) => {
+          return res.status(200).json({
+            success: true,
+            message: "User added successfully!",
+            user,
+          });
+        })
+        .catch((error) => {
+          return res.status(500).json({
+            success: false,
+            message: "Failed to add User!",
+            error,
+          });
+        });
     });
-  } else {
-    await User.create(newUser)
-      .then((user) => {
-        return res.status(200).json({
-          success: true,
-          message: "User added successfully!",
-          user,
-        });
-      })
-      .catch((error) => {
-        return res.status(500).json({
-          success: false,
-          message: "Failed to add User!",
-          error,
-        });
-      });
-  }
 };
 
 //update user
@@ -44,27 +50,33 @@ export const updateUser = async (req, res) => {
     email: email,
     address: address,
   };
-  if (userId === null) {
-    return res.status(400).json({
-      message: "There is no such user",
+
+  await User.findOne({ _id: id })
+    .then(async (userExist) => {
+      if (userExist === null) {
+        return res.status(400).json({
+          message: "There is no such user",
+        });
+      }
+    })
+
+    .then(async () => {
+      await User.findOneAndUpdate({ _id: userId }, upadatedUser, { new: true })
+        .then((user) => {
+          return res.status(200).json({
+            success: true,
+            message: "User updated successfully!",
+            user,
+          });
+        })
+        .catch((error) => {
+          return res.status(500).json({
+            success: false,
+            message: "Failed to update User!",
+            error,
+          });
+        });
     });
-  } else {
-    await User.findOneAndUpdate({ _id: userId }, upadatedUser, { new: true })
-      .then((user) => {
-        return res.status(200).json({
-          success: true,
-          message: "User updated successfully!",
-          user,
-        });
-      })
-      .catch((error) => {
-        return res.status(500).json({
-          success: false,
-          message: "Failed to update User!",
-          error,
-        });
-      });
-  }
 };
 
 //get user address
@@ -99,4 +111,3 @@ export const getUserAddress = async (req, res) => {
         });
     });
 };
-
