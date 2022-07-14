@@ -4,7 +4,7 @@ import {
     fetchProducts,
     filterProducts,
     getSingleProduct,
-    searchProducts
+    searchProducts,
 } from '../controllers/product'
 
 const router = express.Router()

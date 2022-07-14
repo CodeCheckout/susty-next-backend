@@ -186,18 +186,20 @@ export const filterProducts = async (req, res) => {
 export const searchProducts = async (req, res) => {
     const {productName} = req.query
 
-    await Product.find({title: {$regex: '^' + productName, $options: 'i'}}).exec()
+    await Product.find({title: {$regex: '^' + productName, $options: 'i'}})
+        .exec()
         .then((productsList) => {
             return res.status(200).json({
                 success: true,
                 message: 'Searched exist',
                 productsList,
             })
-        }).catch((error) => {
+        })
+        .catch((error) => {
             return res.status(500).json({
                 success: false,
                 message: 'Failed to search',
-                error
+                error,
             })
         })
 }
