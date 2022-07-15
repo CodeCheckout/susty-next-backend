@@ -27,6 +27,7 @@ package-lock.json
 
 /.idea
 /.next
+.vscode
 /package-lock.json
 
 
