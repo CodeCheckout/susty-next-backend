@@ -54,6 +54,14 @@ export const placeOrder = async (req, res) => {
     PayPalLog,
   });
 
+  await Order.create(newOrder).then((order) => {
+    return res.status(200).json({
+      success: true,
+      message: "Order placed successfully",
+      order,
+    });
+  });
+
   await Order.create(newOrder)
     .then((order) => {
       return res.status(200).json({
