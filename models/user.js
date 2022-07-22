@@ -34,6 +34,14 @@ const userSchema = new Schema(
             type: String,
             required: true,
         },
+        products: {
+            type: [String],
+            default: 'null',
+        },
+        mySellings: {
+            type: [String],
+            default: 'null',
+        },
     },
     {
         timestamps: true,

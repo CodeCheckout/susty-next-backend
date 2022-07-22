@@ -113,3 +113,84 @@ export const getUserAddress = async (req, res) => {
                 })
         })
 }
+
+
+// add product
+export const addProductToAccount = async(req, res) => {
+    const {userId, productId} = req.body
+
+    console.log(req.body)
+
+    await User.findByIdAndUpdate(userId, {$push: { products: productId }}).then((updatedItem) => {
+        return res.status(200).json({
+            success: true,
+            message: "Product added successfully",
+            updatedItem
+        })
+    }).catch((error) => {
+        return res.status(500).json({
+            success: false,
+            message: "Product added unsuccessfully",
+            error
+        })
+    })
+}
+
+// add mySelling item
+export const addMySellings = async(req, res) => {
+    const {userId, productId} = req.body
+
+    console.log(req.body)
+
+ 
+    await User.findByIdAndUpdate(userId, {$push: { mySellings: productId }}).then((updatedItem) => {
+        return res.status(200).json({
+            success: true,
+            message: "My selling added successfully",
+            updatedItem
+        })
+    }).catch((error) => {
+        return res.status(500).json({
+            success: false,
+            message: "My selling added unsuccessfully",
+            error
+        })
+    })
+}
+
+// get seller products
+export const getSellerProducts = async (req, res) => {
+    const {userId} = req.query
+
+    console.log(userId)
+
+    await User.findById({_id: userId}).then((userDetails) => {
+        if(userDetails == null || userDetails == []){
+            return res.status(500).json({
+                success: false,
+                message: "There is no such user",
+            })
+        }
+    }).then(async() => {
+        await User.find({_id: userId})
+            .then((products) => {
+                return res.status(200).json({
+                    success: true,
+                    message: 'Seller products fetched',
+                    products,
+                })
+            })
+            .catch((error) => {
+                return res.status(500).json({
+                    success: false,
+                    message: 'Failed to fetch seller products',
+                    error,
+                })
+            })
+    }).catch((error) => {
+        return res.status(500).json({
+            message: "User is not existing",
+            error,
+        })
+    })
+}
