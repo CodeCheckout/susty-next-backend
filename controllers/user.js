@@ -162,8 +162,6 @@ export const addMySellings = async(req, res) => {
 export const getSellerProducts = async (req, res) => {
     const {userId} = req.query
 
-    console.log(userId)
-
     await User.findById({_id: userId}).then((userDetails) => {
         if(userDetails == null || userDetails == []){
             return res.status(500).json({
@@ -172,13 +170,22 @@ export const getSellerProducts = async (req, res) => {
             })
         }
     }).then(async() => {
-        await User.find({_id: userId})
+        await User.findOne({_id: userId})
             .then((products) => {
-                return res.status(200).json({
-                    success: true,
-                    message: 'Seller products fetched',
-                    products,
-                })
+                if(products.products.length > 0){
+                    return res.status(200).json({
+                        success: true,
+                        message: 'Seller products fetched',
+                        products,
+                    })
+                }
+                else{
+                    return res.status(201).json({
+                        success: false,
+                        message: 'Seller has no products',
+                        products,
+                    })
+                }
             })
             .catch((error) => {
                 return res.status(500).json({
@@ -189,6 +196,7 @@ export const getSellerProducts = async (req, res) => {
             })
     }).catch((error) => {
         return res.status(500).json({
+            success: false,
             message: "User is not existing",
             error,
         })
