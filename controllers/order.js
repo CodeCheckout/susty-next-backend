@@ -44,23 +44,22 @@ export const getBuyerOrders = async (req, res) => {
 export const placeOrder = async (req, res) => {
     const {productId, sellerId, buyerId, price, PayPalLog} = req.body
 
-  const newOrder = new Order({
-    productId,
-    seller: sellerId,
-    buyer: buyerId,
-    price,
-    buyerName,
-    sellerName,
-    PayPalLog,
-  });
+    const newOrder = new Order({
+        productId,
+        seller: sellerId,
+        buyer: buyerId,
+        price,
+        buyerName,
+        sellerName,
+        PayPalLog,
+    })
 
-  await Order.create(newOrder)
-    .then((order) => {
-      return res.status(200).json({
-        success: true,
-        message: "Order placed successfully",
-        order,
-      });
+    await Order.create(newOrder).then((order) => {
+        return res.status(200).json({
+            success: true,
+            message: 'Order placed successfully',
+            order,
+        })
     })
 
     await Order.create(newOrder).then((order) => {

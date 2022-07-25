@@ -12,7 +12,7 @@ const sellerSchema = new Schema(
         },
         userId: {
             type: String,
-            required: true
+            required: true,
         },
         address: {
             type: String,
@@ -42,7 +42,7 @@ const sellerSchema = new Schema(
                     message: 'Incorrect character!',
                 },
             ],
-            default: 'null'
+            default: 'null',
         },
     },
     {
