@@ -1,5 +1,5 @@
 import express from 'express'
-import {adduser, updateUser, getUserAddress, addMySellings, addProductToAccount, getSellerProducts} from '../controllers/user'
+import {adduser, updateUser, getUserAddress, addMySellings, addProductToAccount, getSellerProducts, removeUser} from '../controllers/user'
 
 const router = express.Router()
 
@@ -13,5 +13,7 @@ router.get('/user/getaddress', getUserAddress)
 router.put('/user/add-products-seller', addProductToAccount)
 router.put('/user/add-mySellings', addMySellings)
 router.get('/user/fetch-seller-products', getSellerProducts)
+
+router.delete('/user/remove', removeUser)
 
 module.exports = router
