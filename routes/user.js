@@ -6,7 +6,7 @@ import {
     addMySellings,
     addProductToAccount,
     getSellerProducts,
-    removeUser
+    removeUser,
 } from '../controllers/user'
 
 const router = express.Router()
