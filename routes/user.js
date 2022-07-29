@@ -1,5 +1,13 @@
 import express from 'express'
-import {adduser, updateUser, getUserAddress, addMySellings, addProductToAccount, getSellerProducts, removeUser} from '../controllers/user'
+import {
+    adduser,
+    updateUser,
+    getUserAddress,
+    addMySellings,
+    addProductToAccount,
+    getSellerProducts,
+    removeUser
+} from '../controllers/user'
 
 const router = express.Router()
 
