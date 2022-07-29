@@ -13,7 +13,7 @@ export const authenticateUser = async (req, res) => {
     }
 
     const newUser = new User({
-        userId: uid, 
+        userId: uid,
         name: displayName,
         image: {
             url: photoURL,
@@ -33,38 +33,35 @@ export const authenticateUser = async (req, res) => {
     })
 }
 
-export const emailSignIn = async(req, res) => {
+export const emailSignIn = async (req, res) => {
+    const {email, password} = req.body
 
-    const {email, password} = req.body;
-
-    try{
+    try {
         const user = await User.findOne({email})
 
-        if(user && user != [] && user != undefined && user != null){
-            if(bcrypt.compareSync(password, user.password)){
+        if (user && user != [] && user != undefined && user != null) {
+            if (bcrypt.compareSync(password, user.password)) {
                 return res.status(201).json({
                     success: true,
-                    message: "User Logged in successfully",
+                    message: 'User Logged in successfully',
                     user: user,
                 })
-            }else{
+            } else {
                 return res.status(500).json({
                     success: false,
-                    message: "Incorrect password",
+                    message: 'Incorrect password',
                 })
-            } 
-        }
-        else{
+            }
+        } else {
             return res.status(500).json({
                 success: false,
-                message: "Email is not valid",
+                message: 'Email is not valid',
             })
         }
-
-    }catch(err){
+    } catch (err) {
         console.log(err)
         res.json({
-            message: "User is not registered", 
+            message: 'User is not registered',
         })
     }
 }
