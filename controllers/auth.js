@@ -36,7 +36,6 @@ export const authenticateUser = async (req, res) => {
 export const emailSignIn = async (req, res) => {
     const {email, password} = req.body
 
-    try {
         const user = await User.findOne({email})
 
         if (user && user != [] && user != undefined && user != null) {
@@ -58,10 +57,4 @@ export const emailSignIn = async (req, res) => {
                 message: 'Email is not valid',
             })
         }
-    } catch (err) {
-        console.log(err)
-        res.json({
-            message: 'User is not registered',
-        })
-    }
 }
