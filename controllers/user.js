@@ -1,8 +1,13 @@
 import User from '../models/user'
+import bcrypt from 'bcrypt'
 
 //add user
 export const adduser = async (req, res) => {
-    const {name, image, role, userId, email, address} = req.body
+    const {name, image, role, userId, email, address, password} = req.body
+
+    const saltRounds = 10
+    const hashPassword = bcrypt.hashSync(password, saltRounds)
+    console.log(hashPassword)
 
     const newUser = new User({
         name,
@@ -10,19 +15,17 @@ export const adduser = async (req, res) => {
         role,
         userId,
         email,
+        password: hashPassword,
         address,
     })
 
-    await User.findOne({email: email})
-        .then(async (emailExist) => {
-            if (emailExist !== null) {
-                return res.status(400).json({
-                    message: 'Email has taken!',
-                })
-            }
-        })
-
-        .then(async () => {
+    await User.findOne({email: email}).then(async (emailExist) => {
+        if (emailExist !== null) {
+            return res.status(400).json({
+                message: 'Email has taken!',
+                success: false,
+            })
+        } else {
             await User.create(newUser)
                 .then((user) => {
                     return res.status(200).json({
@@ -38,7 +41,8 @@ export const adduser = async (req, res) => {
                         error,
                     })
                 })
-        })
+        }
+    })
 }
 
 //update user
@@ -205,4 +209,16 @@ export const getSellerProducts = async (req, res) => {
                 error,
             })
         })
+}
+
+// remove user  ### ONLY FOR TESTING ###
+export const removeUser = async (req, res) => {
+    const {userId} = req.body
+
+    await User.deleteOne({_id: userId}).then((userDetails) => {
+        return res.status(200).json({
+            message: 'delete success',
+            user: userDetails,
+        })
+    })
 }

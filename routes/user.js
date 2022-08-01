@@ -6,6 +6,7 @@ import {
     addMySellings,
     addProductToAccount,
     getSellerProducts,
+    removeUser,
 } from '../controllers/user'
 
 const router = express.Router()
@@ -20,5 +21,8 @@ router.get('/user/getaddress', getUserAddress)
 router.put('/user/add-products-seller', addProductToAccount)
 router.put('/user/add-mySellings', addMySellings)
 router.get('/user/fetch-seller-products', getSellerProducts)
+
+// for testing only
+router.delete('/user/remove', removeUser)
 
 module.exports = router

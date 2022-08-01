@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/Flashminat0/susty-next-backend#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "esm": "^3.2.25",
