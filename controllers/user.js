@@ -85,6 +85,27 @@ export const updateUser = async (req, res) => {
         })
 }
 
+// get user details
+export const getUserDetails = async(req, res) => {
+    const {userId} = req.query;
+
+    await User.findById(userId).then((user) => {
+        if(user){
+            return res.status(200).json({
+                success: true,
+                message: 'User details fetched successfully',
+                user,
+            })
+        }else{
+            return res.status(501).json({
+                success: false,
+                message: 'Failed to fetch user details',
+                user,
+            })
+        }
+    })
+}
+
 //get user address
 export const getUserAddress = async (req, res) => {
     const {id} = req.query
