@@ -18,17 +18,19 @@ const userSchema = new Schema(
         },
         role: {
             type: String,
-            required: true,
             default: ['customer'],
             enum: ['customer', 'seller', 'admin'],
         },
         userId: {
             type: String,
-            required: true,
+            // required: true,
         },
         email: {
             type: String,
             required: true,
+        },
+        password: {
+            type: String,
         },
         address: {
             type: String,
