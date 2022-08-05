@@ -35,7 +35,7 @@ export const getNotification = async (req, res) => {
 
     const {id} = req.query
 
-    await Notification.findOne({_id: id})
+    await Notification.find({_id: id})
     .then(async (notificationExist) => {
         if (notificationExist === null) {
             return res.status(400).json({
@@ -45,7 +45,7 @@ export const getNotification = async (req, res) => {
     })
 
     .then(async () => {
-        await Notification.findOne({_id: id})
+        await Notification.find({_id: id})
             .then((notification) => {
                 console.log(notification)
                 return res.status(200).json({
