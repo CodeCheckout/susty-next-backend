@@ -38,11 +38,12 @@ const userSchema = new Schema(
         },
         products: {
             type: [String],
-            default: 'null',
         },
         mySellings: {
             type: [String],
-            default: 'null',
+        },
+        rating: {
+            type: Number
         },
     },
     {
