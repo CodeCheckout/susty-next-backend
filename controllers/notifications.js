@@ -2,12 +2,12 @@ import Notification from '../models/notifications'
 
 //add notification
 export const addNotification = async (req, res) => {
-    const { userId, partnerId, favoriteID, message, status } = req.body
+    const { user, partner, favorite, message, status } = req.body
 
     const newNotification = new Notification({
-        userId,
-        partnerId,
-        favoriteID,
+        user,
+        partner,
+        favorite,
         message,
         status,
     })
@@ -33,9 +33,9 @@ export const addNotification = async (req, res) => {
 //get notification
 export const getNotification = async (req, res) => {
 
-    const {userId} = req.query
+    const {user} = req.query
 
-    await Notification.find({userId: userId})
+    await Notification.find({user: user})
     .then(async (notificationExist) => {
         if (notificationExist === null) {
             return res.status(400).json({
@@ -45,7 +45,7 @@ export const getNotification = async (req, res) => {
     })
 
     .then(async () => {
-        await Notification.find({userId: userId})
+        await Notification.find({user: user})
             .then((notification) => {
                 console.log(notification)
                 return res.status(200).json({

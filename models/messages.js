@@ -2,17 +2,13 @@ import mongoose from 'mongoose'
 
 const {Schema} = mongoose
 
-const notificationSchema = new Schema(
+const messageSchema = new Schema(
     {
-        user: {
+        sender: {
             type: Schema.Types.ObjectId,
             required: true,
         },
-        partner: {
-            type: Schema.Types.ObjectId,
-            required: true,
-        },
-        favorite: {
+        receiver: {
             type: Schema.Types.ObjectId,
             required: true,
         },
@@ -31,4 +27,4 @@ const notificationSchema = new Schema(
     }
 )
 
-export default mongoose.model('Notifications', notificationSchema)
+export default mongoose.model('Messages', messageSchema)
