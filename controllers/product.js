@@ -72,6 +72,26 @@ export const fetchProducts = async (req, res) => {
         })
 }
 
+export const fetchContinuosProduct = async(req, res) => {
+    const {productsFrom} = req.query
+
+    await Product.find({}).limit(10).skip(productsFrom)
+        .then((products) => {
+            return res.status(200).json({
+                success: true,
+                message: 'Products fetched successfully!',
+                products,
+            })
+        })
+        .catch((error) => {
+            return res.status(500).json({
+                success: false,
+                message: 'Failed to fetch products!',
+                error,
+            })
+        })
+}
+
 export const getSingleProduct = async (req, res) => {
     const {productId} = req.query
 
