@@ -20,7 +20,7 @@ const messageSchema = new Schema(
             type: Boolean,
             required: true,
             default: false,
-        }
+        },
     },
     {
         timestamps: true,

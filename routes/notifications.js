@@ -3,7 +3,7 @@ import {
     addNotification,
     updateNotification,
     getNotification,
-    deleteNotification
+    deleteNotification,
 } from '../controllers/notifications'
 
 const router = express.Router()
