@@ -8,6 +8,7 @@ import {
     getSellerProducts,
     removeUser,
     getUserDetails,
+    getSellers,
 } from '../controllers/user'
 
 const router = express.Router()
@@ -23,6 +24,7 @@ router.put('/user/add-products-seller', addProductToAccount)
 router.put('/user/add-mySellings', addMySellings)
 router.get('/user/fetch-seller-products', getSellerProducts)
 router.get('/user/fetch-user-details', getUserDetails)
+router.get('/user/fetch-sellers', getSellers)
 
 // for testing only
 router.delete('/user/remove', removeUser)
