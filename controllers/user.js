@@ -245,14 +245,12 @@ export const removeUser = async (req, res) => {
 }
 
 // get all sellers
-export const getSellers = async(req, res) => {
-
-    await User.find({ "products.0": { "$exists": true }}).then((result) => {
+export const getSellers = async (req, res) => {
+    await User.find({'products.0': {$exists: true}}).then((result) => {
         return res.json({
             success: true,
             message: 'Sellers fetched',
-            sellers: result
+            sellers: result,
         })
     })
-
 }
