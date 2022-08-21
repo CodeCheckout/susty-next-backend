@@ -29,4 +29,34 @@ export const sendMessages = async (req, res) => {
 }
 
 //get Messages
-export const getMessages = async (req, res) => {}
+export const getMessages = async (req, res) => {
+    const {sender} = req.query
+
+    await Message.find({sender: sender})
+        .then(async (messagesExist) => {
+            if (messagesExist === null) {
+                return res.status(400).json({
+                    message: 'There is no such meesages!',
+                })
+            }
+        })
+
+        .then(async () => {
+            await Message.find({sender: sender})
+                .then((message) => {
+                    console.log(message)
+                    return res.status(200).json({
+                        success: true,
+                        message: 'Messages fetched successfully!',
+                        message: message,
+                    })
+                })
+                .catch((error) => {
+                    return res.status(400).json({
+                        success: false,
+                        message: 'Failed to fetch Messages!',
+                        error,
+                    })
+                })
+        })
+}
