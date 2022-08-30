@@ -46,13 +46,13 @@ const userSchema = new Schema(
             type: Number,
         },
         following: {
-            type: [Schema.Types.ObjectId]
+            type: [Schema.Types.ObjectId],
         },
         followers: {
-            type: [Schema.Types.ObjectId]
+            type: [Schema.Types.ObjectId],
         },
         reviews: {
-            type: [JSON]
+            type: [JSON],
         },
         resetPasswordToken: String,
         resetPasswordExpire: Date,
@@ -62,15 +62,20 @@ const userSchema = new Schema(
     }
 )
 
-userSchema.methods.getSignedToken = function(){
-    return jwt.sign({ id: this._id}, process.env.JWT_SECRET, {expiresIn: process.env.JWT_EXPIRE})
+userSchema.methods.getSignedToken = function () {
+    return jwt.sign({id: this._id}, process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_EXPIRE,
+    })
 }
 
-userSchema.methods.getResetPasswordToken = function(){
-    const resetToken = crypto.randomBytes(20).toString("hex");
-    this.resetPasswordToken = crypto.createHash("sha256").update(resetToken).digest("hex");
+userSchema.methods.getResetPasswordToken = function () {
+    const resetToken = crypto.randomBytes(20).toString('hex')
+    this.resetPasswordToken = crypto
+        .createHash('sha256')
+        .update(resetToken)
+        .digest('hex')
 
-    this.resetPasswordExpire = Date.now() + 10 * (60 * 1000);
-    return resetToken;
+    this.resetPasswordExpire = Date.now() + 10 * (60 * 1000)
+    return resetToken
 }
 export default mongoose.model('User', userSchema)
