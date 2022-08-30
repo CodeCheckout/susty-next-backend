@@ -1,4 +1,6 @@
 import mongoose from 'mongoose'
+import jwt from 'jsonwebtoken'
+import crypto from 'crypto'
 
 const {Schema} = mongoose
 
@@ -17,13 +19,12 @@ const userSchema = new Schema(
             },
         },
         role: {
-            type: String,
-            default: ['customer'],
+            type: [String],
+            default: 'customer',
             enum: ['customer', 'seller', 'admin'],
         },
         userId: {
             type: String,
-            // required: true,
         },
         email: {
             type: String,
@@ -44,10 +45,37 @@ const userSchema = new Schema(
         rating: {
             type: Number,
         },
+        following: {
+            type: [Schema.Types.ObjectId],
+        },
+        followers: {
+            type: [Schema.Types.ObjectId],
+        },
+        reviews: {
+            type: [JSON],
+        },
+        resetPasswordToken: String,
+        resetPasswordExpire: Date,
     },
     {
         timestamps: true,
     }
 )
 
+userSchema.methods.getSignedToken = function () {
+    return jwt.sign({id: this._id}, process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_EXPIRE,
+    })
+}
+
+userSchema.methods.getResetPasswordToken = function () {
+    const resetToken = crypto.randomBytes(20).toString('hex')
+    this.resetPasswordToken = crypto
+        .createHash('sha256')
+        .update(resetToken)
+        .digest('hex')
+
+    this.resetPasswordExpire = Date.now() + 10 * (60 * 1000)
+    return resetToken
+}
 export default mongoose.model('User', userSchema)

@@ -28,11 +28,7 @@ export const adduser = async (req, res) => {
         } else {
             await User.create(newUser)
                 .then((user) => {
-                    return res.status(200).json({
-                        success: true,
-                        message: 'User added successfully!',
-                        user,
-                    })
+                    return sendToken(user, 201, res)
                 })
                 .catch((error) => {
                     return res.status(500).json({
@@ -253,4 +249,9 @@ export const getSellers = async (req, res) => {
             sellers: result,
         })
     })
+}
+
+const sendToken = (user, statusCode, res) => {
+    const token = user.getSignedToken()
+    res.status(statusCode).json({success: true, token})
 }
