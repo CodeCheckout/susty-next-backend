@@ -72,10 +72,12 @@ export const fetchProducts = async (req, res) => {
         })
 }
 
-export const fetchContinuosProduct = async(req, res) => {
+export const fetchContinuosProduct = async (req, res) => {
     const {productsFrom} = req.query
 
-    await Product.find({}).limit(10).skip(productsFrom)
+    await Product.find({})
+        .limit(10)
+        .skip(productsFrom)
         .then((products) => {
             return res.status(200).json({
                 success: true,

@@ -29,5 +29,4 @@ router.get('/user/fetch-sellers', getSellers)
 // for testing only
 router.delete('/user/remove', removeUser)
 
-
 module.exports = router

@@ -43,7 +43,7 @@ const userSchema = new Schema(
             type: [String],
         },
         rating: {
-            type: Number
+            type: Number,
         },
         following: {
             type: [Schema.Types.ObjectId]
